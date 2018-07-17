@@ -40,7 +40,7 @@ namespace CheckWebSSL
             {
                 websites.ForEach(web =>
                 {
-                    writer.WriteLine(web.URL + "," + web.Message + "," + web.InteriorMessage+',' + web.IsEncrypted + "," + web.Status);
+                    writer.WriteLine(web.ID+","+web.SecondaryID+","+web.Name+","+ web.URL + "," + web.Message + "," + web.InteriorMessage+',' + web.IsEncrypted + "," + web.Status);
                 });
               
             }
@@ -54,7 +54,12 @@ namespace CheckWebSSL
                 reader.ReadLine();
                 while (!reader.EndOfStream)
                 {
-                    sites.Add(new Site() { URL = reader.ReadLine().Split(',')[5] });
+                    var comp = reader.ReadLine().Split(',');
+                    sites.Add(new Site() { URL =  comp[5],
+                        ID = comp[0],
+                        SecondaryID = comp[1],
+                        Name = comp[2]
+                    });
                 }
             }
             return sites;
@@ -66,6 +71,9 @@ namespace CheckWebSSL
             public string Message { get; set; }
             public string Status { get; set; }
             public string InteriorMessage { get; set; }
+            public string ID { get; set; }
+            public string SecondaryID{ get; set; }
+            public string Name { get; set; }
 
         }
 
